@@ -231,12 +231,7 @@
     </div>
   </div>
 
-  <script>
-    const projectId = "edubot-jvrl";
-    const accessToken = "YOUR_ACCESS_TOKEN"; // Replace with real one
-    const sessionId = "user-session-" + Math.random().toString(36).substring(7);
-    const apiUrl = `https://dialogflow.googleapis.com/v2/projects/${projectId}/agent/sessions/${sessionId}:detectIntent`;
-
+    <script>
     function openChat() {
       document.getElementById("chat-button").style.display = "none";
       document.getElementById("chat-container").style.display = "flex";
@@ -260,40 +255,14 @@
       userMsg.classList.add("message", "user-msg");
       chatbox.appendChild(userMsg);
 
-      input.value = "";
+      // Simulated bot response
+      const botMsg = document.createElement("div");
+      botMsg.textContent = "EduBot: The Ai chatbot is not ready yet -MDAun \"" + message + "\".";
+      botMsg.classList.add("message", "bot-msg");
+      chatbox.appendChild(botMsg);
 
-      // Send to Dialogflow
-      fetch(apiUrl, {
-        method: "POST",
-        headers: {
-          "Authorization": "Bearer " + accessToken,
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          queryInput: {
-            text: {
-              text: message,
-              languageCode: "en"
-            }
-          }
-        })
-      })
-      .then(res => res.json())
-      .then(data => {
-        const reply = data.queryResult.fulfillmentText;
-        const botMsg = document.createElement("div");
-        botMsg.textContent = "EduBot: " + reply;
-        botMsg.classList.add("message", "bot-msg");
-        chatbox.appendChild(botMsg);
-        chatbox.scrollTop = chatbox.scrollHeight;
-      })
-      .catch(err => {
-        const botMsg = document.createElement("div");
-        botMsg.textContent = "EduBot: Error reaching Dialogflow.";
-        botMsg.classList.add("message", "bot-msg");
-        chatbox.appendChild(botMsg);
-        console.error(err);
-      });
+      input.value = "";
+      chatbox.scrollTop = chatbox.scrollHeight;
     }
 
     function checkEnter(event) {
@@ -305,3 +274,10 @@
 
 </body>
 </html>
+
+
+<aside>
+  <li>
+    For FeedBack Contact - mdaunjk@gmail.com
+  </li>
+</aside>
