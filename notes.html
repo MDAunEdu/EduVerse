@@ -3,9 +3,176 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>NCERT Solutions - EduVerse</title>
+  <title>Notes - EduVerse</title>
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', Arial, sans-serif;
+      background-color: #f8f9fa;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Chat button */
+    #chat-button {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      font-size: 28px;
+      cursor: pointer;
+      z-index: 1000;
+    }
+
+    /* Fullscreen chat window */
+    #chat-container {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100vw;
+      background-color: white;
+      z-index: 999;
+      flex-direction: column;
+      border: 2px solid #4CAF50;
+    }
+
+    #chat-header {
+      padding: 15px;
+      background-color: #4CAF50;
+      color: white;
+      text-align: center;
+      font-size: 20px;
+    }
+
+    #chatbox {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      max-height: 70vh;
+    }
+
+    #chatbox .message {
+      padding: 10px;
+      border-radius: 10px;
+      margin: 10px 0;
+      max-width: 80%;
+    }
+
+    #chatbox .user-msg {
+      background-color: #e1f7e7;
+      text-align: left;
+      align-self: flex-start;
+    }
+
+    #chatbox .bot-msg {
+      background-color: #e1f3fb;
+      text-align: left;
+      align-self: flex-end;
+    }
+
+    /* Message input fixed to bottom */
+    #chat-input {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      padding: 10px;
+      background-color: white;
+      border-top: 1px solid #ccc;
+      display: flex;
+      justify-content: space-between;
+      box-shadow: 0px -1px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    #userInput {
+      flex: 1;
+      padding: 8px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    #sendBtn {
+      padding: 8px 15px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-left: 5px;
+      border-radius: 5px;
+    }
+
+    #closeChat {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 18px;
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+    }
+
+    /* Header and nav bar */
+    header {
+      background-color: #0056b3;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    nav ul {
+      display: flex;
+      justify-content: center;
+      background-color: #003f7f;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    nav ul li {
+      margin: 0 15px;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      padding: 14px 10px;
+      display: inline-block;
+    }
+
+    nav ul li a:hover {
+      background-color: #002e5e;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+
+      aside, main {
+        width: 100%;
+      }
+
+      nav ul {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      nav ul li {
+        margin: 10px 0;
+      }
+    }
+
+  </style>
 </head>
 <body>
   <header>
@@ -34,8 +201,8 @@
 
     <main>
       <h2>Notes</h2>
-      <p>Find chapter-wise Notes for Class 9 subjects below:</p>
-        <li> Coming Soon </li>        
+      <p>Notes for Class 9 subjects below:</p>
+      <li> Coming Soon </li>        
         <!-- Add more as you expand -->
     </main>
   </div>
@@ -43,5 +210,62 @@
   <footer>
     <p>&copy; 2025 EduVerse. All rights reserved.</p>
   </footer>
+
+  <!-- Chat Button -->
+  <button id="chat-button" onclick="openChat()">🤖</button>
+
+  <!-- Chat Window -->
+  <div id="chat-container">
+    <div id="chat-header">
+      EduBot - AI Chat
+      <button id="closeChat" onclick="closeChat()">✖</button>
+    </div>
+    <div id="chatbox"></div>
+    <div id="chat-input">
+      <input type="text" id="userInput" placeholder="Type your question here..." onkeydown="checkEnter(event)" />
+      <button id="sendBtn" onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    function openChat() {
+      document.getElementById("chat-button").style.display = "none";
+      document.getElementById("chat-container").style.display = "flex";
+    }
+
+    function closeChat() {
+      document.getElementById("chat-button").style.display = "block";
+      document.getElementById("chat-container").style.display = "none";
+    }
+
+    function sendMessage() {
+      const input = document.getElementById("userInput");
+      const message = input.value.trim();
+      if (message === "") return;
+
+      const chatbox = document.getElementById("chatbox");
+
+      // Show user's message
+      const userMsg = document.createElement("div");
+      userMsg.textContent = "You: " + message;
+      userMsg.classList.add("message", "user-msg");
+      chatbox.appendChild(userMsg);
+
+      // Simulated bot response
+      const botMsg = document.createElement("div");
+      botMsg.textContent = "EduBot: The Ai chatbot is not ready yet -MDAun \"" + message + "\".";
+      botMsg.classList.add("message", "bot-msg");
+      chatbox.appendChild(botMsg);
+
+      input.value = "";
+      chatbox.scrollTop = chatbox.scrollHeight;
+    }
+
+    function checkEnter(event) {
+      if (event.key === "Enter") {
+        sendMessage();
+      }
+    }
+  </script>
 </body>
 </html>
