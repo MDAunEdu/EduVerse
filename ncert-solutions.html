@@ -15,28 +15,38 @@
         <li><a href="index.html">Home</a></li>
         <li><a href="ncert-solutions.html">NCERT Solutions</a></li>
         <li><a href="notes.html">Notes</a></li>
-        <li><a href="sample paper.html">Sample Papers</a></li>
+        <li><a href="sample-papers.html">Sample Papers</a></li>
         <li><a href="syllabus.html">Syllabus</a></li>
       </ul>
     </nav>
   </header>
 
   <div class="container">
-    <aside>
-      <h2>Subjects</h2>
-      <ul>
-        <li><a href="#">Class 9 Maths</a></li>
-        <li><a href="#">Class 9 Science</a></li>
-        <li><a href="#">Class 9 English</a></li>
-        <li><a href="#">Class 9 Social Science</a></li>       
-      </ul>
-    </aside>
-
     <main>
       <h2>NCERT Solutions</h2>
       <p>Find chapter-wise NCERT solutions for Class 9 subjects below:</p>
-      <li> Coming Soon </li>        
-        <!-- Add more as you expand -->
+
+      <!-- Subjects section (between heading and links) -->
+      <section id="subjects">
+        <h3>Subjects</h3>
+        <ul>
+          <li><a href="#">Class 9 Maths</a></li>
+          <li><a href="#">Class 9 Science</a></li>
+          <li><a href="#">Class 9 English</a></li>
+          <li><a href="#">Class 9 Social Science</a></li>
+        </ul>
+      </section>
+
+      <!-- Chapter-wise PDF Links -->
+      <section id="pdf-links">
+        <h3>Chapter-wise PDF Solutions</h3>
+        <ul>
+          <li><a href="pdfs/class9-maths-ch1.pdf" target="_blank">Class 9 Maths - Chapter 1</a></li>
+          <li><a href="pdfs/class9-science-ch1.pdf" target="_blank">Class 9 Science - Chapter 1</a></li>
+          <li><a href="pdfs/class9-english-ch1.pdf" target="_blank">Class 9 English - Chapter 1</a></li>
+          <li><a href="pdfs/class9-sst-ch1.pdf" target="_blank">Class 9 Social Science - Chapter 1</a></li>
+        </ul>
+      </section>
     </main>
   </div>
 
@@ -45,7 +55,7 @@
   </footer>
 
   <!-- Chat Button -->
-  <button id="chat-button" onclick="openChat()">🤖</button>
+  <button id="chat-button" onclick="openChat()" aria-label="Open Chatbot">🤖</button>
 
   <!-- Chat Window -->
   <div id="chat-container">
@@ -78,13 +88,11 @@
 
       const chatbox = document.getElementById("chatbox");
 
-      // Show user's message
       const userMsg = document.createElement("div");
       userMsg.textContent = "You: " + message;
       userMsg.classList.add("message", "user-msg");
       chatbox.appendChild(userMsg);
 
-      // Simulated bot response
       const botMsg = document.createElement("div");
       botMsg.textContent = "EduBot: The Ai chatbot is not ready yet -MDAun \"" + message + "\".";
       botMsg.classList.add("message", "bot-msg");
